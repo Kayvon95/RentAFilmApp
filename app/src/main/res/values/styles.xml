@@ -6,6 +6,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/input</item>
+        <item name="android:textColorSecondary">@color/white</item>
+        <item name="android:itemBackground">@color/btn_login_bg</item>
     </style>
 
 </resources>
