@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">RentAFilm</string>
+
+    <!--Strings voor toolbar -->
+    <string name="home_toolbar">Home</string>
+
+
+    <!--Login-->
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="btn_login">Login</string>
+    <string name="link_to_register">Not a member? Sign up now.</string>
+    <string name="error_server_offline">Server kan niet bereikt worden.</string>
+
+
+    <!-- Strings voor film listitem -->
+    <string name="minute_textview">min.</string>
+    <string name="example_filmrating">PG-13</string>
+</resources>
