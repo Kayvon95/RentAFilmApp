@@ -15,7 +15,7 @@
 
 
     <!-- Strings voor film listitem -->
-    <string name="minute_textview">min.</string>
+    <string name="listitem_title">Example title</string>
     <string name="example_filmrating">PG-13</string>
 
     <!-- Register -->
@@ -23,5 +23,9 @@
     <string name="register_email">Email:</string>
     <string name="register_password">Password:</string>
     <string name="register_button">Register</string>
+
+    <!-- Home -->
+    <string name="home_title">Title:</string>
+    <string name="home_age">Age:</string>
 
 </resources>
