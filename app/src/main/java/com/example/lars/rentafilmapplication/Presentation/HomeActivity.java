@@ -10,21 +10,29 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
+import com.example.lars.rentafilmapplication.DataAccess.FilmAPIConnector;
 import com.example.lars.rentafilmapplication.Domain.Film;
 import com.example.lars.rentafilmapplication.R;
 
 
 import java.util.ArrayList;
 
-public class HomeActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class HomeActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, FilmAPIConnector.FilmListener {
 
     private final String TAG = this.getClass().getSimpleName();
     private ArrayList<Film> films = new ArrayList<>();
     private Toolbar toolbar;
     private ListView filmListView;
     private ArrayAdapter myFilmAdapter;
+    private EditText searchFld;
+    private Button searchBtn;
+    //String to retrieve from field
+    private String entry;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +51,20 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         filmListView.setAdapter(myFilmAdapter);
         //ActionListener
         filmListView.setOnItemClickListener(this);
+
+        //Search textfield + button
+        searchFld = (EditText) findViewById(R.id.searchInput);
+        searchBtn = (Button) findViewById(R.id.searchButton);
+        //ActionListener for button, get text from field
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                films.clear();
+                entry = searchFld.getText().toString();
+                entry.replaceAll("", " + ");
+                getFilm();
+            }
+        });
     }
 
     @Override
@@ -64,7 +86,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
 
     public void getFilm() {
         // onzeApiConnector task = new onzeApiConnector(this); <-- Nog aanmaken
-        String[] urls = new String[]{"https://localhost:9001/api/v1/films/"};
+        String[] urls = new String[]{"https://localhost:9001/api/v1/films/" + entry};
         //task.execute(urls);
     }
 
@@ -74,8 +96,8 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         // zorg dat je back niet kan gebruiken
     }
 
-    //@Override <--- Uncommenten wanneer de apiconnector klaar is
-    public void filmSetAvailable(Film film) {
+    @Override
+    public void onFilmAvailable(Film film) {
 
         films.add(film);
         Log.i(TAG, "Film fetched (" + film.toString() + ")");
