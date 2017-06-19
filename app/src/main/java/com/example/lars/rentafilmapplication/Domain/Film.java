@@ -20,19 +20,21 @@ public class Film implements Serializable  {
     private String features;
     private String lastUpdate;
 
-    public Film(int filmId, String title, String description, int releaseYear, int langId, int originalLangId, int rentalDuration, int length, Double replacementCost, String rating, String features, String lastUpdate) {
-        this.filmId = filmId;
-        this.title = title;
-        this.description = description;
-        this.releaseYear = releaseYear;
-        this.langId = langId;
-        this.originalLangId = originalLangId;
-        this.rentalDuration = rentalDuration;
-        this.length = length;
-        this.replacementCost = replacementCost;
-        this.rating = rating;
-        this.features = features;
-        this.lastUpdate = lastUpdate;
+    public String toString(){
+        return "Film{" +
+                "film_id='" + filmId + '\'' +
+                "title='" + title + '\'' +
+                "description='" + description + '\'' +
+                "release_year='" + releaseYear + '\'' +
+                "lang_id='" + langId + '\'' +
+                "original_lang_id='" + originalLangId + '\'' +
+                "rental_duration='" + rentalDuration + '\'' +
+                "length='" + length + '\'' +
+                "replacement_cost='" + replacementCost + '\'' +
+                "rating='" + rating + '\'' +
+                "features='" + features + '\'' +
+                "last_update='" + lastUpdate + '\'' +
+                '}';
     }
 
     public int getFilmId() {

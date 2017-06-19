@@ -1,5 +1,7 @@
 package com.example.lars.rentafilmapplication.DataAccess;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.util.Log;
@@ -14,6 +16,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -25,28 +28,59 @@ import java.net.URLConnection;
 public class FilmAPIConnector extends AsyncTask<String, Void, String> {
 
     private final String TAG = getClass().getSimpleName();
-    private FilmListener listener;
-    private Handler handler = new Handler();
+    private OnFilmAvailable listener = null;
+    private Context context;
+    private ProgressDialog progressBar;
+
+    public FilmAPIConnector(OnFilmAvailable listener, Context context){
+        this.listener = listener;
+        this.context = context;
+    }
+
+    // spinner voor 'laadscherm' tijdens het ophalen van de films
+    protected void onPreExecute(){
+        progressBar = new ProgressDialog(context);
+        progressBar.setCancelable(false);
+        progressBar.setMessage("Fetching Films");
+        progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressBar.setIndeterminate(true);
+        progressBar.show();
+    }
 
     protected String doInBackground(String... params) {
         //
         InputStream inputStream = null;
-        // url fetched from entry
-        String productUrl = "";
-        // Resulting response
+        int responseCode = -1;
+
+        String movieUrl = params[0];
         String response = "";
-        BufferedReader reader = null;
+
+        Log.i(TAG, "doInBackground - " + movieUrl);
 
         //Try-block to establish connection
         try {
             // Create productURL object
-            URL url = new URL(params[0]);
+            URL url = new URL(movieUrl);
             // Open connection
             URLConnection urlConnection = url.openConnection();
-            reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-            String line;
-            while  ((line = reader.readLine()) != null) {
-                response += line;
+
+            if (!(urlConnection instanceof HttpURLConnection)){
+                return null;
+            }
+
+            HttpURLConnection httpConnection = (HttpURLConnection) urlConnection;
+            httpConnection.setAllowUserInteraction(false);
+            httpConnection.setInstanceFollowRedirects(true);
+            httpConnection.setRequestMethod("GET");
+
+            httpConnection.connect();
+
+            responseCode = httpConnection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK){
+                inputStream = httpConnection.getInputStream();
+                response = getStringFromInputStream(inputStream);
+            } else {
+                Log.e(TAG, "Error, invalid response");
             }
 
             //Exception catching and logging
@@ -59,68 +93,89 @@ public class FilmAPIConnector extends AsyncTask<String, Void, String> {
         }catch (Exception e) {
             Log.e(TAG, "doInBackground Exception " + e.getLocalizedMessage());
             return null;
-        }finally {
-            if (reader != null){
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    Log.e("doInBackGround IOExc", e.getLocalizedMessage());
-                    return null;
-                }
-            }
         }
-        // Het resultaat gaat naar de onPostExecute methode.
         return response;
     }
 
     //Handle doInBackground method results, retrieve from json, fit form of Product-class
     protected void onPostExecute(String response) {
-        //Logging info
-//        Log.i("onPostExecute ", response);
 
-        //Parse JSON-results for requested results
+        if (response == null || response == ""){
+            Log.e(TAG, "onPostExecute got empty response");
+        }
+
+        JSONObject jsonObject;
+
         try {
-            // Top level json object
-            JSONObject jsonObject = new JSONObject(response);
+            jsonObject = new JSONObject(response);
 
-            // Get all products, loop through them
-            JSONArray films = jsonObject.getJSONArray("films");
-            //The loop
-            for(int i = 0; i < films.length(); i++) {
+            JSONArray results = jsonObject.getJSONArray("results");
+            for (int idx = 0; idx < 20; idx++){
+                JSONObject film = results.getJSONObject(idx);
 
-                // Get title, specsTag, summary, longDescription, smallImgUrl, largeImgUrl products:get json via index, convert index to String as variable
-                int filmId = films.getJSONObject(i).optInt("film_id");
-                String title = films.getJSONObject(i).optString("title");
-                String description = films.getJSONObject(i).optString("description");
-                int releaseYear = films.getJSONObject(i).optInt("release_year");
-                int langId = films.getJSONObject(i).optInt("language_id");
-                int originalLangId = films.getJSONObject(i).optInt("original_language_id");
-                int rentalDuration = films.getJSONObject(i).optInt("rental_duration");
-                int length = films.getJSONObject(i).optInt("length");
-                Double replacementCost = films.getJSONObject(i).optDouble("replacement");
-                String rating = films.getJSONObject(i).optString("rating");
-                String features = films.getJSONObject(i).optString("special_features");
-                String lastUpdate = films.getJSONObject(i).optString("last_update");
+                int filmId = film.getInt("film_id");
+                String title = film.getString("title");
+                String description = film.getString("description");
+                int releaseYear = film.getInt("release_year");
+                int langId = film.getInt("language_id");
+                int originalLangId = film.getInt("original_language_id");
+                int rentalDuration = film.getInt("rental_duration");
+                int length = film.getInt("length");
+                Double replacementCost = film.getDouble("replacement");
+                String rating = film.getString("rating");
+                String features = film.getString("special_features");
+                String lastUpdate = film.getString("last_update");
 
+                Film f = new Film();
+                f.setTitle(title);
+                f.setFilmId(filmId);
+                f.setDescription(description);
+                f.setReleaseYear(releaseYear);
+                f.setLangId(langId);
+                f.setOriginalLangId(originalLangId);
+                f.setRentalDuration(rentalDuration);
+                f.setLength(length);
+                f.setReplacementCost(replacementCost);
+                f.setRating(rating);
+                f.setFeatures(features);
+                f.setLastUpdate(lastUpdate);
 
-                Film film = new Film(filmId, title, description, releaseYear,
-                        langId, originalLangId, rentalDuration, length, replacementCost,
-                        rating, features, lastUpdate );
-
-
-                // call back with new person data
-                listener.onFilmAvailable(film);
-
+                listener.onFilmAvailable(f);
             }
-        } catch( JSONException ex) {
+            progressBar.dismiss();
+        } catch (JSONException ex){
             Log.e(TAG, "onPostExecute JSONException " + ex.getLocalizedMessage());
         }
     }
 
+    private static String getStringFromInputStream(InputStream is) {
 
+        BufferedReader br = null;
+        StringBuilder sb = new StringBuilder();
+
+        String line;
+        try {
+            br = new BufferedReader(new InputStreamReader(is));
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return sb.toString();
+    }
 
     // Call back interface
-    public interface FilmListener {
+    public interface OnFilmAvailable {
         void onFilmAvailable(Film film);
     }
 }

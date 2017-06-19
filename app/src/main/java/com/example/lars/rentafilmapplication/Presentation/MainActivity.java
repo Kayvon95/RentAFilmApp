@@ -1,6 +1,5 @@
 package com.example.lars.rentafilmapplication.Presentation;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -25,6 +23,8 @@ import com.example.lars.rentafilmapplication.Service.VolleyRequestQueue;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static com.example.lars.rentafilmapplication.Service.Config.DEFAULT_TOKEN;
+
 public class MainActivity extends AppCompatActivity {
 
     private EditText editTextEmail, editTextPassword;
@@ -33,13 +33,24 @@ public class MainActivity extends AppCompatActivity {
 
     public final String TAG = this.getClass().getSimpleName();
 
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        sharedPreferences = getSharedPreferences("TOKEN", MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
         editTextEmail = (EditText) findViewById(R.id.email_login);
         editTextPassword = (EditText) findViewById(R.id.password_login);
+
+        // Clear de sharedPrefs , hierdoor wordt de token verwijdert en moet je opnieuw inloggen.
+        editor.clear();
+        editor.putString("TOKEN", DEFAULT_TOKEN);
+        editor.commit();
 
         register = (Button) findViewById(R.id.link_register);
         register.setOnClickListener(new View.OnClickListener(){
@@ -70,26 +81,27 @@ public class MainActivity extends AppCompatActivity {
                     (Request.Method.POST, Config.URL_LOGIN, jsonBody, new Response.Listener<JSONObject>() {
 
                         public void onResponse(JSONObject response){
-                            // succesvol response geeft token.
-                            Toast.makeText(getApplicationContext(), "Successfully logged in", Toast.LENGTH_SHORT).show();
 
                             try {
-                                String token = response.getString("token");
 
-                                Context context = getApplicationContext();
-                                SharedPreferences sharedPref = context.getSharedPreferences("TOKEN", Context.MODE_PRIVATE);
-                                SharedPreferences.Editor editor = sharedPref.edit();
-                                editor.putString("TOKEN", token);
-                                editor.commit();
+                                String token = response.getString("TOKEN");
 
-                                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                                startActivity(intent);
-                                // sluit login activity
-                                finish();
+                                if (token == DEFAULT_TOKEN){
+                                    Toast.makeText(getApplicationContext(), "Please enter a valid password and username", Toast.LENGTH_LONG).show();
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "Successfully logged in", Toast.LENGTH_SHORT).show();
+                                    editor.putString("TOKEN", token);
+                                    editor.commit();
 
+                                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                                    startActivity(intent);
+                                    // sluit login activity
+                                    finish();
+                                }
                             } catch (JSONException e){
                                 Log.e(TAG, e.getMessage());
                             }
+
                         }
 
                         // Error response van Volley
