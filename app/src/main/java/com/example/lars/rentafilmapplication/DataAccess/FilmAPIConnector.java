@@ -108,8 +108,6 @@ public class FilmAPIConnector extends AsyncTask<String, Void, String> {
                         rating, features, lastUpdate );
 
 
-
-
                 // call back with new person data
                 listener.onFilmAvailable(film);
 
