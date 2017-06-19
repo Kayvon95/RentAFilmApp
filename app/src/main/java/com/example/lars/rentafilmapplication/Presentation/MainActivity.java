@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -27,7 +28,7 @@ import org.json.JSONObject;
 public class MainActivity extends AppCompatActivity {
 
     private EditText editTextEmail, editTextPassword;
-    private Button login;
+    private Button login, register;
     private String myEmail, myPassword;
 
     public final String TAG = this.getClass().getSimpleName();
@@ -39,6 +40,14 @@ public class MainActivity extends AppCompatActivity {
 
         editTextEmail = (EditText) findViewById(R.id.email_login);
         editTextPassword = (EditText) findViewById(R.id.password_login);
+
+        register = (Button) findViewById(R.id.link_register);
+        register.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
 
         login = (Button) findViewById(R.id.btnLogin);
         login.setOnClickListener(new View.OnClickListener(){

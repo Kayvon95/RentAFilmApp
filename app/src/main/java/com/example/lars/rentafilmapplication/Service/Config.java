@@ -6,7 +6,7 @@ package com.example.lars.rentafilmapplication.Service;
 
 public class Config {
 
-    private static final String BASIC_URL = "http://10.0.2.2:9001";
+    private static final String BASIC_URL = "https://rent-a-film-server.herokuapp.com";
 
     public static final String URL_LOGIN = BASIC_URL + "/api/v1/login";
 }

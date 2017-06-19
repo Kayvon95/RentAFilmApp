@@ -3,6 +3,7 @@
 
     <!--Strings voor toolbar -->
     <string name="home_toolbar">Home</string>
+    <string name="register_toolbar">Register</string>
 
 
     <!--Login-->
@@ -16,4 +17,11 @@
     <!-- Strings voor film listitem -->
     <string name="minute_textview">min.</string>
     <string name="example_filmrating">PG-13</string>
+
+    <!-- Register -->
+    <string name="register_sign_up">Sign up</string>
+    <string name="register_email">Email:</string>
+    <string name="register_password">Password:</string>
+    <string name="register_button">Register</string>
+
 </resources>

@@ -8,5 +8,6 @@
     <color name="input">#555555</color>
     <color name="hint">#999999</color>
     <color name="btn_login_bg">#E0E0E0</color>
+    <color name="off_white">#EFEFEF</color>
     <color name="btn_login">#45A7BA</color>
 </resources>

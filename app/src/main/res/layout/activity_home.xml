@@ -7,7 +7,7 @@
     tools:context="com.example.lars.rentafilmapplication.Presentation.HomeActivity">
 
     <include
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbar_home"
         layout="@layout/toolbar">
     </include>
 
