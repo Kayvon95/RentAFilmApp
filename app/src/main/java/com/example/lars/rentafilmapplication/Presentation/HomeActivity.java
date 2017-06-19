@@ -61,12 +61,10 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
 //            public void onClick(View v) {
 //                films.clear();
 //                entry = searchFld.getText().toString();
-//                entry.replaceAll("", " + ");
-//                getFilm(URL_GETMOVIES + entry);
+//                getFilms.execute(URL_GETMOVIES + entry);
 //            }
 //        });
-//
-//        getFilm(URL_GETMOVIES);
+
     }
 
     @Override

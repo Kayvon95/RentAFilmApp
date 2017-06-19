@@ -39,12 +39,13 @@ public class FilmAPIConnector extends AsyncTask<String, Void, String> {
 
     // spinner voor 'laadscherm' tijdens het ophalen van de films
     protected void onPreExecute(){
-        progressBar = new ProgressDialog(context);
-        progressBar.setCancelable(false);
-        progressBar.setMessage("Fetching Films");
-        progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressBar.setIndeterminate(true);
-        progressBar.show();
+
+            progressBar = new ProgressDialog(context);
+            progressBar.setCancelable(false);
+            progressBar.setMessage("Fetching Films");
+            progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressBar.setIndeterminate(true);
+            progressBar.show();
     }
 
     protected String doInBackground(String... params) {
@@ -105,13 +106,12 @@ public class FilmAPIConnector extends AsyncTask<String, Void, String> {
         }
 
         JSONObject jsonObject;
-
         try {
             jsonObject = new JSONObject(response);
 
-            JSONArray results = jsonObject.getJSONArray("results");
-            for (int idx = 0; idx < 20; idx++){
-                JSONObject film = results.getJSONObject(idx);
+            JSONArray films = jsonObject.getJSONArray("films");
+            for (int idx = 0; idx < films.length(); idx++){
+                JSONObject film = films.getJSONObject(idx);
 
                 int filmId = film.getInt("film_id");
                 String title = film.getString("title");
