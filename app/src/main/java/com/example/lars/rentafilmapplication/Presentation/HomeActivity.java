@@ -17,6 +17,7 @@ import android.widget.ListView;
 import com.example.lars.rentafilmapplication.DataAccess.FilmAPIConnector;
 import com.example.lars.rentafilmapplication.Domain.Film;
 import com.example.lars.rentafilmapplication.R;
+import com.example.lars.rentafilmapplication.Service.Config;
 
 
 import java.util.ArrayList;
@@ -55,6 +56,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         //Search textfield + button
         searchFld = (EditText) findViewById(R.id.searchInput);
         searchBtn = (Button) findViewById(R.id.searchButton);
+
         //ActionListener for button, get text from field
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,9 +64,11 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                 films.clear();
                 entry = searchFld.getText().toString();
                 entry.replaceAll("", " + ");
-                getFilm();
+                getFilm(Config.URL_GETMOVIES + entry);
             }
         });
+
+        getFilm(Config.URL_GETMOVIES);
     }
 
     @Override
@@ -84,10 +88,10 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         startActivity(i);
     }
 
-    public void getFilm() {
-        // onzeApiConnector task = new onzeApiConnector(this); <-- Nog aanmaken
-        String[] urls = new String[]{"https://localhost:9001/api/v1/films/" + entry};
-        //task.execute(urls);
+    public void getFilm(String url) {
+        FilmAPIConnector task = new FilmAPIConnector();
+        String[] urls = new String[]{ Config.URL_GETMOVIES + entry};
+        task.execute(urls);
     }
 
 
