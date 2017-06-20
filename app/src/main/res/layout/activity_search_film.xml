@@ -6,4 +6,10 @@
     android:layout_height="match_parent"
     tools:context="com.example.lars.rentafilmapplication.Presentation.SearchFilmActivity">
 
+    <include
+        android:id="@+id/toolbar_home"
+        layout="@layout/toolbar">
+    </include>
+
+
 </android.support.constraint.ConstraintLayout>
