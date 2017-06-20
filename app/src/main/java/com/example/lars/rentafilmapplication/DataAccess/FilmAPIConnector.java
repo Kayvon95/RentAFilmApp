@@ -98,7 +98,7 @@ public class FilmAPIConnector extends AsyncTask<String, Void, String> {
         return response;
     }
 
-    //Handle doInBackground method results, retrieve from json, fit form of Product-class
+    //Handle doInBackground method results, retrieve from json, fit form of Film class
     protected void onPostExecute(String response) {
 
         if (response == null || response == ""){

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -31,6 +32,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     private EditText searchFld;
     private FilmAPIConnector getFilms;
     private Button searchBtn;
+
     //String to retrieve from field
     private String entry;
 
@@ -60,7 +62,6 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 films.clear();
                 entry = searchFld.getText().toString();
                 getFilm();
@@ -72,6 +73,20 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.rent_a_film_menu, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.log_out:
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+            case R.id.home:
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

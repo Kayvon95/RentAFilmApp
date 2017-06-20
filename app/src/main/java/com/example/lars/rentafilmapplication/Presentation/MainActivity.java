@@ -37,6 +37,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Context context = getApplicationContext();
+        SharedPreferences sharedPref = context.getSharedPreferences("token", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.clear();
+        editor.commit();
+
         editTextEmail = (EditText) findViewById(R.id.email_login);
         editTextPassword = (EditText) findViewById(R.id.password_login);
 
@@ -165,5 +171,10 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
         return trimmedString;
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 }
