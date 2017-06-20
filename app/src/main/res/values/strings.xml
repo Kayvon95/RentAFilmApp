@@ -3,6 +3,8 @@
 
     <!--Strings voor toolbar -->
     <string name="home_toolbar">Home</string>
+    <string name="register_toolbar">Register</string>
+    <string name="filmdetail_toolbar">Film details</string>
 
 
     <!--Login-->
@@ -14,6 +16,32 @@
 
 
     <!-- Strings voor film listitem -->
-    <string name="minute_textview">min.</string>
-    <string name="example_filmrating">PG-13</string>
+    <string name="listitem_title">Example title</string>
+    <string name="example_releaseyear">1999</string>
+
+    <!--Strings voor filmdetail -->
+    <string name="filmid_textview">1</string>
+    <string name="film_testtitle">Een Filmtitel</string>
+    <string name="film_testdescription">Een beschrijving over de film, met toegelichting op het thema, de karakters en de omgeving.
+    Meer verhalende tekst over de karakters en de inhoud van de film, en waarom het nodig is om deze film te hebben gezien.etcetera
+    </string>
+    <string name="film_testRelease">2010</string>
+    <string name="duration_header">Duration: </string>
+    <string name="film_testLength">139</string>
+    <string name="minute_field_suffix">min.</string>
+    <string name="rating_header">Rating: </string>
+    <string name="film_testrating">PG-13</string>
+    <string name="features_header">This movie features: </string>
+    <string name="film_testfeatures">Deleted Scenes, Behind the Scenes. Extra DVD.</string>
+
+    <!-- Register -->
+    <string name="register_sign_up">Sign up</string>
+    <string name="register_email">Email:</string>
+    <string name="register_password">Password:</string>
+    <string name="register_button">Register</string>
+
+    <!-- Home -->
+    <string name="home_title">Title:</string>
+    <string name="home_year">Year:</string>
+
 </resources>
