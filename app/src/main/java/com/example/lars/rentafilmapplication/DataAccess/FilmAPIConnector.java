@@ -103,48 +103,38 @@ public class FilmAPIConnector extends AsyncTask<String, Void, String> {
 
         if (response == null || response == ""){
             Log.e(TAG, "onPostExecute got empty response");
-        }
+        } else {
 
-        JSONObject jsonObject;
-        try {
-            jsonObject = new JSONObject(response);
+            JSONObject jsonObject;
+            try {
+                jsonObject = new JSONObject(response);
 
-            JSONArray films = jsonObject.getJSONArray("films");
-            for (int idx = 0; idx < films.length(); idx++){
-                JSONObject film = films.getJSONObject(idx);
+                JSONArray items = jsonObject.getJSONArray("items");
+                for (int idx = 0; idx < items.length(); idx++) {
+                    JSONObject film = items.getJSONObject(idx);
 
-                int filmId = film.getInt("film_id");
-                String title = film.getString("title");
-                String description = film.getString("description");
-                int releaseYear = film.getInt("release_year");
-                int langId = film.getInt("language_id");
-                int originalLangId = film.getInt("original_language_id");
-                int rentalDuration = film.getInt("rental_duration");
-                int length = film.getInt("length");
-                Double replacementCost = film.getDouble("replacement");
-                String rating = film.getString("rating");
-                String features = film.getString("special_features");
-                String lastUpdate = film.getString("last_update");
+                    int filmId = film.getInt("film_id");
+                    String title = film.getString("title");
+                    String description = film.getString("description");
+                    int releaseYear = film.getInt("release_year");
+                    int langId = film.getInt("language_id");
+                    int rentalDuration = film.getInt("rental_duration");
+                    int length = film.getInt("length");
+                    String rating = film.getString("rating");
+                    String features = film.getString("special_features");
+                    String lastUpdate = film.getString("last_update");
 
-                Film f = new Film();
-                f.setTitle(title);
-                f.setFilmId(filmId);
-                f.setDescription(description);
-                f.setReleaseYear(releaseYear);
-                f.setLangId(langId);
-                f.setOriginalLangId(originalLangId);
-                f.setRentalDuration(rentalDuration);
-                f.setLength(length);
-                f.setReplacementCost(replacementCost);
-                f.setRating(rating);
-                f.setFeatures(features);
-                f.setLastUpdate(lastUpdate);
+                    Film f = new Film(filmId, title, description, releaseYear, langId,
+                            rentalDuration, length, rating, features, lastUpdate);
 
-                listener.onFilmAvailable(f);
+
+                    listener.onFilmAvailable(f);
+                }
+
+                progressBar.dismiss();
+            } catch (JSONException ex) {
+                Log.e(TAG, "onPostExecute JSONException " + ex.getLocalizedMessage());
             }
-            progressBar.dismiss();
-        } catch (JSONException ex){
-            Log.e(TAG, "onPostExecute JSONException " + ex.getLocalizedMessage());
         }
     }
 

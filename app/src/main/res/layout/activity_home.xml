@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@android:drawable/ic_menu_search"
             android:hint="Enter product name..."
-            android:inputType="textVisiblePassword"
+            android:inputType="number"
             android:layout_weight="7"
             />
 
@@ -70,8 +70,8 @@
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
                 android:layout_height="wrap_content"
-                android:textSize="22sp"
-                android:text="@string/home_age"/>
+                android:textSize="22dp"
+                android:text="@string/home_year"/>
 
         </LinearLayout>
 

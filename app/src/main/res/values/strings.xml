@@ -16,7 +16,7 @@
 
     <!-- Strings voor film listitem -->
     <string name="listitem_title">Example title</string>
-    <string name="example_filmrating">PG-13</string>
+    <string name="example_releaseyear">1999</string>
 
     <!-- Register -->
     <string name="register_sign_up">Sign up</string>
@@ -26,6 +26,6 @@
 
     <!-- Home -->
     <string name="home_title">Title:</string>
-    <string name="home_age">Age:</string>
+    <string name="home_year">Year:</string>
 
 </resources>

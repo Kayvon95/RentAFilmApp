@@ -29,6 +29,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     private ListView filmListView;
     private FilmAdapter filmAdapter;
     private EditText searchFld;
+    private FilmAPIConnector getFilms;
     private Button searchBtn;
     //String to retrieve from field
     private String entry;
@@ -42,7 +43,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         toolbar.setTitle(R.string.home_toolbar);
         setSupportActionBar(toolbar);
 
-        FilmAPIConnector getFilms = new FilmAPIConnector(this, this);
+        getFilms = new FilmAPIConnector(this, this);
         getFilms.execute(URL_GETMOVIES);
 
         filmListView = (ListView) findViewById(R.id.filmListView);
@@ -55,16 +56,16 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         searchFld = (EditText) findViewById(R.id.searchInput);
         searchBtn = (Button) findViewById(R.id.searchButton);
 
-//        //ActionListener for button, get text from field
-//        searchBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                films.clear();
-//                entry = searchFld.getText().toString();
-//                getFilms.execute(URL_GETMOVIES + entry);
-//            }
-//        });
+        //ActionListener for button, get text from field
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                films.clear();
+                entry = searchFld.getText().toString();
+                getFilm();
+            }
+        });
     }
 
     @Override
@@ -84,11 +85,11 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         startActivity(i);
     }
 
-//    public void getFilm(String url) {
-//        FilmAPIConnector task = new FilmAPIConnector();
-//        String[] urls = new String[]{ URL_GETMOVIES + entry};
-//        task.execute(urls);
-//    }
+    public void getFilm() {
+        FilmAPIConnector task = new FilmAPIConnector(this, this);
+        String[] urls = new String[]{ URL_GETMOVIES + entry};
+        task.execute(urls);
+    }
 
 
     @Override

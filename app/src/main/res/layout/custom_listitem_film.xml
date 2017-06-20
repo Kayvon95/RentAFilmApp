@@ -31,11 +31,11 @@
             android:layout_weight="1">
 
             <TextView
-                android:id="@+id/filmRatingTextView"
+                android:id="@+id/filmYearTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20dp"
-                android:text="@string/example_filmrating"/>
+                android:text="@string/example_releaseyear"/>
 
         </LinearLayout>
 

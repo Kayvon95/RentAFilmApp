@@ -12,13 +12,25 @@ public class Film implements Serializable  {
     private String description;
     private int releaseYear;
     private int langId;
-    private int originalLangId;
     private int rentalDuration;
     private int length;
-    private Double replacementCost;
     private String rating;
     private String features;
     private String lastUpdate;
+
+    public Film(int filmId, String title, String description, int releaseYear, int langId, int rentalDuration,
+                int length, String rating, String features, String lastUpdate){
+        this.filmId = filmId;
+        this.title = title;
+        this.description = description;
+        this.releaseYear = releaseYear;
+        this.langId = langId;
+        this.rentalDuration = rentalDuration;
+        this.length = length;
+        this.rating = rating;
+        this.features = features;
+        this.lastUpdate = lastUpdate;
+    }
 
     public String toString(){
         return "Film{" +
@@ -27,10 +39,8 @@ public class Film implements Serializable  {
                 "description='" + description + '\'' +
                 "release_year='" + releaseYear + '\'' +
                 "lang_id='" + langId + '\'' +
-                "original_lang_id='" + originalLangId + '\'' +
                 "rental_duration='" + rentalDuration + '\'' +
                 "length='" + length + '\'' +
-                "replacement_cost='" + replacementCost + '\'' +
                 "rating='" + rating + '\'' +
                 "features='" + features + '\'' +
                 "last_update='" + lastUpdate + '\'' +
@@ -77,14 +87,6 @@ public class Film implements Serializable  {
         this.langId = langId;
     }
 
-    public int getOriginalLangId() {
-        return originalLangId;
-    }
-
-    public void setOriginalLangId(int originalLangId) {
-        this.originalLangId = originalLangId;
-    }
-
     public int getRentalDuration() {
         return rentalDuration;
     }
@@ -99,14 +101,6 @@ public class Film implements Serializable  {
 
     public void setLength(int length) {
         this.length = length;
-    }
-
-    public Double getReplacementCost() {
-        return replacementCost;
-    }
-
-    public void setReplacementCost(Double replacementCost) {
-        this.replacementCost = replacementCost;
     }
 
     public String getRating() {

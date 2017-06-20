@@ -58,7 +58,7 @@ public class FilmAdapter extends BaseAdapter {
 
             viewHolder = new ViewHolder();
             viewHolder.title = (TextView) convertView.findViewById(R.id.filmTitleTextView);
-            viewHolder.rating = (TextView) convertView.findViewById(R.id.filmRatingTextView);
+            viewHolder.releaseYear = (TextView) convertView.findViewById(R.id.filmYearTextView);
 
             convertView.setTag(viewHolder);
         } else {
@@ -68,7 +68,7 @@ public class FilmAdapter extends BaseAdapter {
         Film film = (Film) filmArrayList.get(position);
 
         viewHolder.title.setText(film.getTitle());
-        viewHolder.rating.setText(film.getRating());
+        viewHolder.releaseYear.setText(film.getReleaseYear() + "");
 
         return convertView;
     }
