@@ -33,6 +33,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     private FilmAPIConnector getFilms;
     private Button searchBtn;
 
+
     //String to retrieve from field
     private String entry;
 
