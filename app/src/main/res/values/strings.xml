@@ -44,4 +44,14 @@
     <string name="home_title">Title:</string>
     <string name="home_year">Year:</string>
 
+    <!-- RentalActivity -->
+    <string name="rental_id_header">ID:</string>
+    <string name="rental_rental_date_header">Rental date:</string>
+    <string name="rental_customer_id_header">Customer ID:</string>
+
+    <!-- Rental Listitem Strings -->
+    <string name="rental_testid">1</string>
+    <string name="rental_testdate">2017&#8211;06&#8211;19 14:22:51</string>
+    <string name="rental_testcustomerid">459</string>
 </resources>
+
